@@ -4,20 +4,15 @@
 #include <limits.h>
 #include "optional_int.h"
 
-struct optional_int {
-    int value;
-    int has;
-};
-
-optional_int optional_int_with(int value) {
-    return (optional_int) { .value = value, .has = 1 };
+OptionalInt optional_int_with(int value) {
+    return (OptionalInt) { .value = value, .has = 1 };
 }
 
-optional_int optional_int_empty() {
-    return (optional_int) { .value = 0, .has = 0 };
+OptionalInt optional_int_empty() {
+    return (OptionalInt) { .value = 0, .has = 0 };
 }
 
-optional_int optional_int_parse(const char *source) {
+OptionalInt optional_int_parse(const char *source) {
     char *end;
     errno = 0;
     long result = strtol(source, &end, 0);
@@ -26,21 +21,21 @@ optional_int optional_int_parse(const char *source) {
         optional_int_empty();
 }
 
-int optional_int_has(optional_int optional) {
+int optional_int_has(OptionalInt optional) {
     return optional.has;
 }
 
-int optional_int_unwrap(optional_int optional) {
+int optional_int_unwrap(OptionalInt optional) {
     return optional.value;
 }
 
-optional_int optional_int_map(optional_int optional, int (*function)(int)) {
+OptionalInt optional_int_map(OptionalInt optional, int (*function)(int)) {
     return optional_int_has(optional) ?
         optional_int_with(function(optional_int_unwrap(optional))) :
         optional;
 }
 
-int optional_int_snprint(char *buffer, size_t buffer_size, optional_int optional) {
+int optional_int_snprint(char *buffer, size_t buffer_size, OptionalInt optional) {
     return optional_int_has(optional) ?
         snprintf(buffer, buffer_size, "%d", optional.value) :
         snprintf(buffer, buffer_size, "Empty");
