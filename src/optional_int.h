@@ -33,6 +33,11 @@ int optional_int_or(const OptionalInt optional, int default_value);
 // Maps a raw function pointer to optional's data, if it exists
 OptionalInt optional_int_map(const OptionalInt optional, int (*function)(int));
 
+// Maps a function pointer with context to the optional
+OptionalInt optional_int_map_closure(
+        void *context, const OptionalInt optional, int (*function)(void*, int)
+);
+
 // Prints the OptionalInt to the given buffer, for up to n characters.
 // Returns the number of characters printed.
 int optional_int_snprint(char *buffer, size_t buffer_size, const OptionalInt optional);

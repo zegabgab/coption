@@ -41,6 +41,14 @@ OptionalInt optional_int_map(OptionalInt optional, int (*function)(int)) {
         optional;
 }
 
+OptionalInt optional_int_map_closure(
+    void *context, OptionalInt optional, int (*function)(void*, int)
+) {
+    return optional_int_has(optional) ?
+        optional_int_with(function(context, optional_int_unwrap(optional))) :
+        optional;
+}
+
 int optional_int_snprint(char *buffer, size_t buffer_size, OptionalInt optional) {
     return optional_int_has(optional) ?
         snprintf(buffer, buffer_size, "%d", optional.value) :
