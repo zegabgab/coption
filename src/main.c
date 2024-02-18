@@ -14,4 +14,6 @@ int main(int argc, char **argv) {
     char buffer[32];
     int ignored = optional_int_snprint(buffer, sizeof buffer, optional);
     printf("Square of supplied number: %s\n", buffer);
+    int DEFAULT = 69;
+    printf("Defaulted to %d\n", optional_int_or(optional, DEFAULT));
 }

@@ -29,6 +29,12 @@ int optional_int_unwrap(OptionalInt optional) {
     return optional.value;
 }
 
+int optional_int_or(OptionalInt optional, int default_value) {
+    return optional_int_has(optional) ?
+        optional.value :
+        default_value;
+}
+
 OptionalInt optional_int_map(OptionalInt optional, int (*function)(int)) {
     return optional_int_has(optional) ?
         optional_int_with(function(optional_int_unwrap(optional))) :
