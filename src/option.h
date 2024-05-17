@@ -37,3 +37,17 @@ Option *opt_map_closure(
         const Option *option, void *context, void *(*function)(void*, void*));
 
 #endif
+
+#ifndef _OPTION_H
+#define _OPTION_H
+
+#define OPT_MAP(option, map, dest) ({ \
+        typeof(option) _o = option; \
+        typeof(map(*_o)) *_d = dest;\
+        if (_o) {\
+            *_d = map(*_o);\
+        }\
+        _o ? _d : NULL;\
+    })
+
+#endif
